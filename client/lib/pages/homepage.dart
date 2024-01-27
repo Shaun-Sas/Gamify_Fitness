@@ -42,30 +42,54 @@ class _MyHomePageState extends State<MyHomePage> {
             )),
       ),
       body: SingleChildScrollView(
-          child: FutureBuilder(
-        future: getPosts(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            return const CircularProgressIndicator();
-          } else if (snapshot.hasData) {
-            List data = jsonDecode(snapshot.data!.body);
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                return PostWidget(
-                  authorId: data[index]["user"],
-                  timestamps: data[index]["createdAt"],
-                  media: data[index]["media"],
-                  caption: data[index]["caption"],
-                  likes: "${data[index]["likes"]}",
-                  dislikes: "2",
-                );
-              },
-            );
-          }
-          return Text(snapshot.error.toString());
-        },
+          child: Column(
+        children: [
+          PostWidget(
+            authorId: "shaunak",
+            timestamps: "12/12/23 at 12:12",
+            media:
+                "http://192.168.78.217:5000/uploads/1706356378090-428402713.mp4",
+            caption: "this is a test data",
+            likes: "12",
+            dislikes: "2",
+          ),
+          PostWidget(
+            authorId: "shaunak",
+            timestamps: "12/12/23 at 12:12",
+            media:
+                "http://192.168.78.217:5000/uploads/1706356417878-356186700.mp4",
+            caption: "this is a test data",
+            likes: "12",
+            dislikes: "2",
+          ),
+          PostWidget(
+            authorId: "shaunak",
+            timestamps: "12/12/23 at 12:12",
+            media:
+                "http://192.168.78.217:5000/uploads/1706360399727-792044374.mp4",
+            caption: "test workout video data",
+            likes: "12",
+            dislikes: "2",
+          ),
+          PostWidget(
+            authorId: "dvip",
+            timestamps: "12/12/23 at 12:12",
+            media:
+                "http://192.168.78.217:5000/uploads/1706356378090-428402713.mp4",
+            caption: "this is a test data",
+            likes: "12",
+            dislikes: "2",
+          ),
+          PostWidget(
+            authorId: "taher",
+            timestamps: "12/12/23 at 12:12",
+            media:
+                "http://192.168.78.217:5000/uploads/1706356417878-356186700.mp4",
+            caption: "this is a test data",
+            likes: "12",
+            dislikes: "2",
+          )
+        ],
       )),
     );
   }

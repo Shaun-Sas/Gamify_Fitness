@@ -3,6 +3,7 @@ import 'package:client/pages/homepage.dart';
 import 'package:client/pages/profile_page.dart';
 import 'package:client/pages/quotes_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({Key? key}) : super(key: key);
@@ -12,6 +13,8 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
+  var usernameCont = TextEditingController();
+  bool isloading = false;
   int currentPageIndex = 0;
   List<Widget> pages = [
     const MyHomePage(),
@@ -19,6 +22,9 @@ class _WrapperState extends State<Wrapper> {
     const GuildsPage(),
     const ProfilePage(),
   ];
+
+  void addConn() async {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +32,26 @@ class _WrapperState extends State<Wrapper> {
           title: const Text('L E V E L   U P'),
           actions: [
             IconButton(
-              onPressed: () => {},
+              onPressed: () => {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("add connectiond"),
+                      content: TextField(
+                          controller: usernameCont,
+                          decoration:
+                              const InputDecoration(label: Text("Username"))),
+                      actions: [
+                        isloading
+                            ? const CircularProgressIndicator()
+                            : TextButton(
+                                onPressed: () {}, child: const Text("continue"))
+                      ],
+                    );
+                  },
+                )
+              },
               icon: const Icon(Icons.search),
             ),
             IconButton(
@@ -50,8 +75,8 @@ class _WrapperState extends State<Wrapper> {
               label: 'Home',
             ),
             NavigationDestination(
-              selectedIcon: Icon(Icons.format_quote_sharp),
-              icon: Icon(Icons.format_quote_sharp),
+              selectedIcon: Icon(Icons.sports),
+              icon: Icon(Icons.sports),
               label: 'Quots',
             ),
             NavigationDestination(

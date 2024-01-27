@@ -20,19 +20,26 @@ class QuotesPage extends StatelessWidget {
                     style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold),
                   ),
                 ),
-                GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: 10,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
-                  itemBuilder: (context, index) {
-                    return TaskWidget(
-                      id: '',
-                      name: '',
-                      des: '',
-                    );
-                  },
-                )
+                TaskWidget(
+                  id: '',
+                  name: 'pullups',
+                  des: '21k peoples completed',
+                ),
+                TaskWidget(
+                  id: '',
+                  name: 'running',
+                  des: '67k peoples completed',
+                ),
+                TaskWidget(
+                  id: '',
+                  name: 'walking',
+                  des: '81k peoples completed',
+                ),
+                TaskWidget(
+                  id: '',
+                  name: 'pushups',
+                  des: '29k peoples completed',
+                ),
               ],
             )),
       ),

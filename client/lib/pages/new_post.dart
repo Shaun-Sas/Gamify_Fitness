@@ -68,22 +68,25 @@ class _NewPostWidgetState extends State<NewPostWidget> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              TextField(
-                controller: captionController,
-                decoration: const InputDecoration(hintText: "Caption"),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: captionController,
+                  decoration: const InputDecoration(
+                      label: Text("caption"), border: OutlineInputBorder()),
+                ),
               ),
               const SizedBox(
                 height: 18,
               ),
-              Text('Selected Files: ${file?.name}'),
-              const SizedBox(
-                height: 18,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    getFile();
-                  },
-                  child: const Text("select video"))
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 48,
+                child: ElevatedButton(
+                    onPressed: () {
+                      getFile();
+                    },
+                    child: const Text("select video")),
+              )
             ],
           ),
         ),
