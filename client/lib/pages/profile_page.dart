@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:client/Components/profile_post.dart';
 import 'package:client/Components/progressbar.dart';
+import 'package:client/services/authenticator.dart';
 import 'package:client/services/shared_pref.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -48,7 +49,6 @@ class _ProfilePageState extends State<ProfilePage> {
               return const Center(child: Text("no data found"));
             }
             final body = jsonDecode(snapshot.data!.body);
-            print(body);
             int postC = (body["posts"] as List).length;
             int conC = (body["connections"] as List).length;
             return Column(
@@ -218,6 +218,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     );
                   },
                 ),
+                const SizedBox(height: 36),
+                ElevatedButton(onPressed: () {
+                  SharedPref.deleteToken();
+                  Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return Authenticator();
+                },
+              ),);
+                }, child: Text("Logout"))
               ],
             );
           },

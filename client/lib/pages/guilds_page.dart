@@ -47,13 +47,22 @@ class _GuildsPageState extends State<GuildsPage> {
     );
   }
 
+  Future<http.Response> getAllGuilds() async {
+    String token = await SharedPref.getToken();
+    Map<String, String> header = {"Authorization": "Bearer $token"};
+    return http.get(
+      Uri.parse("http://localhost:5000/community/community"),
+      headers: header,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(left: 16, top: 8, right: 16),
         child: FutureBuilder(
-          future: getGuilds(),
+          future: getAllGuilds(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
               return const CircularProgressIndicator();

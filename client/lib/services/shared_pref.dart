@@ -13,4 +13,9 @@ class SharedPref {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getString(tokenKey);
   }
+
+  static deleteToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.remove(tokenKey);
+  }
 }

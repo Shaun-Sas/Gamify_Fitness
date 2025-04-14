@@ -79,6 +79,8 @@ communityController.addMember = async (req, res) => {
       res.json({ message: "Member added successfully" });
     } else res.status(404).json({ message: "community not found" });
   } catch (error) {
+    console.log(error);
+    
     res.status(500).json({ message: "Failed to add member", error });
   }
 };

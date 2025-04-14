@@ -31,6 +31,17 @@ class CommunityPage extends StatelessWidget {
     );
   }
 
+    Future<http.Response> joinGuild(communityId) async {
+    String token = await SharedPref.getToken();
+    
+    Map<String, String> header = {"Authorization": "Bearer $token"};
+    return http.post(
+      Uri.parse("http://localhost:5000/community/add-member"),
+      headers: header,
+      body: {"communityId": communityId}
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +78,9 @@ class CommunityPage extends StatelessWidget {
                           backgroundColor:
                               Theme.of(context).colorScheme.secondary,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          joinGuild(id);
+                        },
                         child: const Text(
                           "Join Guild",
                           style: TextStyle(color: Colors.white),
