@@ -38,7 +38,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                       Navigator.pop(dialogContext);
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return const NewPostWidget();
+                          return NewPostWidget();
                         },
                       ));
                     },
@@ -52,7 +52,7 @@ class _TaskWidgetState extends State<TaskWidget> {
         );
       },
       child: Card(
-        color: Theme.of(context).colorScheme.secondary,
+        // color: Theme.of(context).colorScheme.secondary,
         child: ListTile(
           title: Text(
             widget.name,

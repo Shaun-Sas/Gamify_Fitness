@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class PostWidget extends StatefulWidget {
-  String authorId;
-  String timestamps;
-  String media;
-  String caption;
-  String likes;
-  String dislikes;
+  final String authorId;
+  final String timestamps;
+  final String media;
+  final String caption;
+  final String likes;
 
-  PostWidget({
+  const PostWidget({
     super.key,
     required this.authorId,
     required this.timestamps,
     required this.media,
     required this.caption,
     required this.likes,
-    required this.dislikes,
   });
 
   @override
@@ -24,134 +22,130 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
-  late VideoPlayerController _videoPlayerController;
+  bool isVideo = false;
+  VideoPlayerController? _videoController;
 
   @override
   void initState() {
     super.initState();
+    _determineMediaTypeAndInitialize();
+  }
 
-    _videoPlayerController =
-        VideoPlayerController.networkUrl(Uri.parse(widget.media))
-          ..initialize().then((value) {
-            setState(() {
-              _videoPlayerController.play();
-            });
-          })
-          ..setLooping(true);
+  void _determineMediaTypeAndInitialize() {
+    final ext = widget.media.split(".").last.toLowerCase();
+    isVideo = ['mp4', 'mkv', 'mov', 'webm'].contains(ext);
+
+    if (isVideo) {
+      _videoController =
+          VideoPlayerController.networkUrl(Uri.parse(widget.media))
+            ..initialize().then((_) {
+              setState(() {
+                _videoController?.play();
+              });
+            })
+            ..setLooping(true);
+    }
   }
 
   @override
   void dispose() {
-    _videoPlayerController.dispose();
+    _videoController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final textColor = Theme.of(context).colorScheme.inversePrimary;
+
     return Container(
       padding: const EdgeInsets.all(10),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          /// Header
           Row(
             children: [
               Expanded(
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                      radius: 28,
-                      child: const Text("T"),
+                    Text(
+                      widget.authorId,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
-                    const SizedBox(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.authorId,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
-                          ),
-                        ),
-                        Text(widget.timestamps),
-                      ],
-                    ),
+                    Text(widget.timestamps),
                   ],
                 ),
               ),
-              PopupMenuButton(
-                itemBuilder: (context) {
-                  return [];
-                },
+              PopupMenuButton<String>(
+                onSelected: (value) => print('Selected: $value'),
+                itemBuilder:
+                    (context) => [
+                      const PopupMenuItem(value: "Share", child: Text("Share")),
+                      const PopupMenuItem(value: "Save", child: Text("Save")),
+                    ],
               ),
             ],
           ),
+
+          const SizedBox(height: 12),
+
+          /// Caption
+          Text(
+            widget.caption,
+            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+          ),
+
           const SizedBox(height: 16),
-          SizedBox(
-            child: Text(
-              widget.caption,
-              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-            ),
-          ),
-          const SizedBox(height: 18),
-          AspectRatio(
-            aspectRatio: _videoPlayerController.value.aspectRatio,
-            child: VideoPlayer(_videoPlayerController),
-          ),
-          const SizedBox(height: 18),
+
+          /// Media content (Image or Video)
+          if (isVideo &&
+              _videoController != null &&
+              _videoController!.value.isInitialized)
+            AspectRatio(
+              aspectRatio: _videoController!.value.aspectRatio,
+              child: VideoPlayer(_videoController!),
+            )
+          else if (!isVideo)
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                widget.media,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                errorBuilder:
+                    (context, error, stackTrace) =>
+                        const Text("Failed to load media."),
+              ),
+            )
+          else
+            const Center(child: CircularProgressIndicator()),
+
+          const SizedBox(height: 16),
+
+          /// Like and comment section
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton.icon(
-                label: Text(
-                  "28 likes",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                  ),
-                ),
                 onPressed: () {},
-                icon: Icon(
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  Icons.favorite,
-                  size: 32,
-                ),
-              ),
-              ElevatedButton.icon(
+                icon: Icon(Icons.favorite, size: 24, color: textColor),
                 label: Text(
-                  "${widget.dislikes} dislikes",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                  ),
-                ),
-                onPressed: () {},
-                icon: Icon(
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  Icons.heart_broken,
-                  size: 32,
+                  "${widget.likes} likes",
+                  style: TextStyle(color: textColor),
                 ),
               ),
               IconButton(
                 onPressed: () {},
-                icon: Icon(
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  Icons.comment,
-                  size: 32,
-                ),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  Icons.share,
-                  size: 32,
-                ),
+                icon: Icon(Icons.comment, size: 28, color: textColor),
               ),
             ],
           ),
-          const SizedBox(
-            height: 10,
-            child: Divider(thickness: 0.5, color: Colors.grey),
-          ),
+
+          const Divider(thickness: 0.2, color: Colors.grey),
         ],
       ),
     );

@@ -1,10 +1,14 @@
 import 'package:client/services/shared_pref.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class NewPostWidget extends StatefulWidget {
-  const NewPostWidget({super.key});
+  NewPostWidget({super.key});
+
+  final TextEditingController captionController = TextEditingController();
+  PlatformFile? file;
 
   @override
   State<NewPostWidget> createState() => _NewPostWidgetState();
@@ -13,48 +17,66 @@ class NewPostWidget extends StatefulWidget {
 class _NewPostWidgetState extends State<NewPostWidget> {
   @override
   Widget build(BuildContext context) {
-    final TextEditingController captionController = TextEditingController();
-    PlatformFile? file;
-
     void navigate() {
       Navigator.pop(context);
     }
 
+    void showMessage(String message) {
+      showDialog(
+        context: context,
+        builder:
+            (_) => AlertDialog(
+              title: const Text("Notice"),
+              content: Text(message),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("OK"),
+                ),
+              ],
+            ),
+      );
+    }
+
     void post() async {
+      if (widget.file == null || widget.file!.path == null) {
+        showMessage("File not selected");
+        return;
+      }
+
       String token = await SharedPref.getToken();
       var client = http.Client();
       var request = http.MultipartRequest(
-        'post',
+        'POST',
         Uri.parse('http://localhost:5000/post/post'),
       );
 
       request.headers.addAll({"Authorization": "Bearer $token"});
-      request.fields["caption"] = captionController.text;
+      request.fields["caption"] = widget.captionController.text;
       request.files.add(
-        await http.MultipartFile.fromPath("content-media", file!.name),
+        kIsWeb 
+        ? http.MultipartFile.fromBytes("content-media", widget.file?.bytes as List<int>, filename: widget.file?.name)
+        : await http.MultipartFile.fromPath('content-media', widget.file!.path!)
       );
-      var response = await client.send(request);
 
+      var response = await client.send(request);
       client.close();
 
       if (response.statusCode == 200) {
         navigate();
       } else {
-        print(response.stream.toString());
+        showMessage("Upload failed. Status: ${response.statusCode}");
       }
     }
 
     void getFile() async {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-      print(result?.files[0]);
-
       if (result != null) {
-        file = result.files[0];
+        setState(() {
+          widget.file = result.files[0];
+        });
       } else {
-        print(
-          "+++++++++++++++++++++++++++++++++++++nullllllllllllllllllllllllllllllllll",
-        );
+        showMessage("No file was selected.");
       }
     }
 
@@ -78,7 +100,7 @@ class _NewPostWidgetState extends State<NewPostWidget> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
-                  controller: captionController,
+                  controller: widget.captionController,
                   decoration: const InputDecoration(
                     label: Text("captions"),
                     border: OutlineInputBorder(),

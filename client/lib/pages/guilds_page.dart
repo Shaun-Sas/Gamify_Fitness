@@ -103,8 +103,10 @@ class _GuildsPageState extends State<GuildsPage> {
                 title: const Text("Create Guild"),
                 content: Wrap(
                   children: [
-                    TextField(controller: nameCont),
-                    TextField(controller: desCont),
+                    TextField(controller: nameCont, 
+                      decoration: InputDecoration( hintText: "Guild Name")),
+                    TextField(controller: desCont, 
+                      decoration: InputDecoration( hintText: "Description")),
                   ],
                 ),
                 actions: [

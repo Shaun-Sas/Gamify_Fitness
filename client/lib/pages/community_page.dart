@@ -20,25 +20,25 @@ class CommunityPage extends StatelessWidget {
     required this.image,
     required this.members,
     required this.tasks,
-  });
+  }) ;
 
   Future<http.Response> getTasks() async {
     String token = await SharedPref.getToken();
     Map<String, String> header = {"Authorization": "Bearer $token"};
     return http.get(
-      Uri.parse("http://localhost:5000/community/mycommunities"),
+      Uri.parse("http://localhost:5000/community/tasks"),
       headers: header,
     );
   }
 
-    Future<http.Response> joinGuild(communityId) async {
+  Future<http.Response> joinGuild(communityId) async {
     String token = await SharedPref.getToken();
-    
+
     Map<String, String> header = {"Authorization": "Bearer $token"};
     return http.post(
       Uri.parse("http://localhost:5000/community/add-member"),
       headers: header,
-      body: {"communityId": communityId}
+      body: {"communityId": communityId},
     );
   }
 

@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Level Up',
-      theme: lightTheme,
-      darkTheme: darkTheme,
+      // theme: lightTheme,
+      // darkTheme: darkTheme,
       home: const Authenticator(),
     );
   }

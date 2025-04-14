@@ -18,7 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String token = await SharedPref.getToken();
     Map<String, String> header = {"Authorization": "Bearer $token"};
     return http.get(
-      Uri.parse("http://localhost:5000/post/myposts"),
+      Uri.parse("http://localhost:5000/post/all"),
       headers: header,
     );
   }
@@ -27,8 +27,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: SizedBox(
-        height: 75,
-        width: 75,
         child: FloatingActionButton(
           backgroundColor: Theme.of(context).colorScheme.secondary,
           onPressed: () {
@@ -36,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return const NewPostWidget();
+                  return NewPostWidget();
                 },
               ),
             );
@@ -69,7 +67,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     media: data[index]["media"],
                     caption: data[index]["caption"],
                     likes: "${data[index]["likes"]}",
-                    dislikes: "2",
                   );
                 },
               );
