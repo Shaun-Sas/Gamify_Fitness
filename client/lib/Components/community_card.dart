@@ -47,7 +47,6 @@ class _CommunityWidgetState extends State<CommunityWidget> {
       child: Card(
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          height: 100,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

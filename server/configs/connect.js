@@ -3,7 +3,7 @@ let db_url = "";
 
 if (process.env.NODE_ENV === "pro")
   db_url = process.env.REMOTE_DATABASE_URL || "";
-else db_url = process.env.MONGO_SECRET_URI;
+else db_url = "mongodb://127.0.0.1:27017/gamify-fitness";
 
 mongoose.set("strictQuery", false);
 const connectDB = async () => {

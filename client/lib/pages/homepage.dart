@@ -18,7 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String token = await SharedPref.getToken();
     Map<String, String> header = {"Authorization": "Bearer $token"};
     return http.get(
-      Uri.parse("http://65.2.182.126:5000/post/myposts"),
+      Uri.parse("http://localhost:5000/post/myposts"),
       headers: header,
     );
   }

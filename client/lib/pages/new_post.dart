@@ -25,13 +25,13 @@ class _NewPostWidgetState extends State<NewPostWidget> {
       var client = http.Client();
       var request = http.MultipartRequest(
         'post',
-        Uri.parse('http://65.2.182.126:5000/post/post'),
+        Uri.parse('http://localhost:5000/post/post'),
       );
 
       request.headers.addAll({"Authorization": "Bearer $token"});
       request.fields["caption"] = captionController.text;
       request.files.add(
-        await http.MultipartFile.fromPath("content-media", file!.path!),
+        await http.MultipartFile.fromPath("content-media", file!.name),
       );
       var response = await client.send(request);
 
@@ -46,6 +46,8 @@ class _NewPostWidgetState extends State<NewPostWidget> {
 
     void getFile() async {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+      print(result?.files[0]);
 
       if (result != null) {
         file = result.files[0];

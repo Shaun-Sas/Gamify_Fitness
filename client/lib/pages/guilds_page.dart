@@ -26,7 +26,7 @@ class _GuildsPageState extends State<GuildsPage> {
     Map<String, String> header = {"Authorization": "Bearer $token"};
 
     var response = await http.post(
-      Uri.parse("http://65.2.182.126:5000/community/community"),
+      Uri.parse("http://localhost:5000/community/community"),
       headers: header,
       body: Map.from({"name": gName, "description": gDes}),
     );
@@ -42,7 +42,7 @@ class _GuildsPageState extends State<GuildsPage> {
     String token = await SharedPref.getToken();
     Map<String, String> header = {"Authorization": "Bearer $token"};
     return http.get(
-      Uri.parse("http://65.2.182.126:5000/community/mycommunities"),
+      Uri.parse("http://localhost:5000/community/mycommunities"),
       headers: header,
     );
   }

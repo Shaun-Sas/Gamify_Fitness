@@ -22,7 +22,7 @@ class _SignUpPageState extends State<SignUpPage> {
     });
 
     final response = await http.post(
-      Uri.parse("http://65.2.182.126:5000/auth/signup"),
+      Uri.parse("http://localhost:5000/auth/signup"),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'username': usernameControlller.text,

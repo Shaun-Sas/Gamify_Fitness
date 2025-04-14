@@ -33,7 +33,7 @@ class _SignInPageState extends State<SignInPage> {
     });
 
     final response = await http.post(
-      Uri.parse("http://65.2.182.126:5000/auth/signin"),
+      Uri.parse("http://localhost:5000/auth/signin"),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'email': emailController.text,
