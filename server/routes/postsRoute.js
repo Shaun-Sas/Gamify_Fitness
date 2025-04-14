@@ -13,6 +13,8 @@ router
   .get(authorize, postController.getPost)
   .delete(authorize, postController.deletePost);
 
+router.route("/all").get(postController.allPosts);
+
 router.route("/comment/:postId").post(authorize, postController.addComment);
 
 router.route("/like/:postId").post(authorize, postController.addLike);

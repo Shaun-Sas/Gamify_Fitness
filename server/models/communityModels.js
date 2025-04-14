@@ -31,9 +31,6 @@ const communitySchema = new mongoose.Schema({
             description: {
                 type: String,
             },
-            deadline: {
-                type: Date
-            },
             posts: [
                 {
                     type: mongoose.Schema.Types.ObjectId,

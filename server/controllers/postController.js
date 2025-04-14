@@ -201,4 +201,10 @@ postController.addLike = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+postController.allPosts = async (req, res) => {
+  const posts = await postModel.find({}).lean().exec()
+  return res.json(posts)
+}
+
 module.exports = postController;
