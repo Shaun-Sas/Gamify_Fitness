@@ -2,9 +2,7 @@ import 'package:client/pages/homepage.dart';
 import 'package:flutter/material.dart';
 
 int currentPageIndex = 0;
-List<Widget> pages = [
-  MyHomePage(),
-];
+List<Widget> pages = [const MyHomePage()];
 
 class Navigation_bar extends StatefulWidget {
   const Navigation_bar({super.key});
@@ -34,10 +32,7 @@ class _Navigation_barState extends State<Navigation_bar> {
           icon: Icon(Icons.local_activity),
           label: 'Activities',
         ),
-        NavigationDestination(
-          icon: Icon(Icons.person),
-          label: 'Profile',
-        ),
+        NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
       ],
     );
   }
@@ -63,7 +58,7 @@ class _WrapperState extends State<Wrapper> {
         },
         children: pages,
       ),
-      bottomNavigationBar: Navigation_bar(),
+      bottomNavigationBar: const Navigation_bar(),
     );
   }
 }

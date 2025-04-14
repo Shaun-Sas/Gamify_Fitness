@@ -27,7 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
       body: jsonEncode({
         'username': usernameControlller.text,
         'email': emailController.text,
-        'password': passwordController.text
+        'password': passwordController.text,
       }),
     );
 
@@ -44,27 +44,31 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: Center(
-            child: Padding(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: Center(
+        child: Padding(
           padding: const EdgeInsets.all(35.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Icon(Icons.person,
-                    size: 80,
-                    color: Theme.of(context).colorScheme.inversePrimary),
+                Icon(
+                  Icons.person,
+                  size: 80,
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                ),
                 const SizedBox(height: 010),
                 const Text("M I N I M A L", style: TextStyle(fontSize: 20)),
                 const SizedBox(height: 25),
                 TextField(
                   controller: emailController,
                   decoration: InputDecoration(
-                      label: const Text("Email"),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                      hintText: ""),
+                    label: const Text("Email"),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    hintText: "",
+                  ),
                 ),
                 const SizedBox(height: 15),
                 TextField(
@@ -72,7 +76,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   decoration: InputDecoration(
                     label: const Text("Username"),
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12)),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -81,38 +86,40 @@ class _SignUpPageState extends State<SignUpPage> {
                   decoration: InputDecoration(
                     label: const Text("Password"),
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12)),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text("Forgot Password?",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.inversePrimary,
-                        )),
+                    Text(
+                      "Forgot Password?",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),
                 isloading
                     ? const CircularProgressIndicator()
                     : ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.inversePrimary,
-                        ),
-                        onPressed: () {
-                          signup();
-                        },
-                        child: const Text("Continue",
-                            style: TextStyle(color: Colors.white)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.inversePrimary,
                       ),
+                      onPressed: () {
+                        signup();
+                      },
+                      child: const Text(
+                        "Continue",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                 const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(errmsg),
-                ),
+                Padding(padding: const EdgeInsets.all(16), child: Text(errmsg)),
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -125,7 +132,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: const Text(
                         " signup Here",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
                       ),
                     ),
                   ],
@@ -133,7 +142,9 @@ class _SignUpPageState extends State<SignUpPage> {
               ],
             ),
           ),
-        )));
+        ),
+      ),
+    );
   }
 
   void navigate() {

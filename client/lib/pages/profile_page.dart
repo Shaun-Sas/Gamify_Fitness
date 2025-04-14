@@ -17,15 +17,19 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<http.Response> getPosts() async {
     String token = await SharedPref.getToken();
     Map<String, String> header = {"Authorization": "Bearer $token"};
-    return http.get(Uri.parse("http://65.2.182.126:5000/post/myposts"),
-        headers: header);
+    return http.get(
+      Uri.parse("http://65.2.182.126:5000/post/myposts"),
+      headers: header,
+    );
   }
 
   Future<http.Response> getData() async {
     String token = await SharedPref.getToken();
     Map<String, String> header = {"Authorization": "Bearer $token"};
-    return http.get(Uri.parse("http://65.2.182.126:5000/user/myprofile"),
-        headers: header);
+    return http.get(
+      Uri.parse("http://65.2.182.126:5000/user/myprofile"),
+      headers: header,
+    );
   }
 
   @override
@@ -39,13 +43,9 @@ class _ProfilePageState extends State<ProfilePage> {
             if (snapshot.connectionState == ConnectionState.active) {
               return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
-              return Center(
-                child: Text(snapshot.error.toString()),
-              );
+              return Center(child: Text(snapshot.error.toString()));
             } else if (snapshot.data == null) {
-              return const Center(
-                child: Text("no data found"),
-              );
+              return const Center(child: Text("no data found"));
             }
             final body = jsonDecode(snapshot.data!.body);
             print(body);
@@ -62,81 +62,92 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         Text(
                           body["username"],
-                          style: TextStyle(
-                              fontSize: 28, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         Text(
                           body["email"],
                           style: TextStyle(
-                              color:
-                                  Theme.of(context).colorScheme.inversePrimary,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400),
-                        )
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     CircleAvatar(
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                        radius: 32,
-                        child: Text("ifb")
-                        // Image(
-                        //   image: NetworkImage(
-                        //     body["profileImage"],
-                        //   ),
-                        // )
-                        )
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      radius: 32,
+                      child: const Text("ifb"),
+                      // Image(
+                      //   image: NetworkImage(
+                      //     body["profileImage"],
+                      //   ),
+                      // )
+                    ),
                   ],
                 ),
-                const SizedBox(
-                  height: 24,
-                ),
+                const SizedBox(height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       children: [
                         const Text("KARMAS"),
-                        Text("${body["karmas"]}",
-                            style: const TextStyle(
-                                fontSize: 32, fontWeight: FontWeight.bold)),
+                        Text(
+                          "${body["karmas"]}",
+                          style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     ),
                     Column(
                       children: [
                         const Text("STREAKS"),
-                        Text("${body["streaks"]}",
-                            style: const TextStyle(
-                                fontSize: 32, fontWeight: FontWeight.bold)),
+                        Text(
+                          "${body["streaks"]}",
+                          style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     ),
                     Column(
                       children: [
                         const Text("CONNECTION"),
-                        Text("$conC",
-                            style: const TextStyle(
-                                fontSize: 32, fontWeight: FontWeight.bold)),
+                        Text(
+                          "$conC",
+                          style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     ),
                     Column(
                       children: [
                         const Text("POSTS"),
-                        Text("$postC",
-                            style: const TextStyle(
-                                fontSize: 32, fontWeight: FontWeight.bold)),
+                        Text(
+                          "$postC",
+                          style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 18,
-                ),
+                const SizedBox(height: 18),
                 Progressbar(points: body["karmas"]),
-                const SizedBox(
-                  height: 18,
-                ),
+                const SizedBox(height: 18),
                 if ((body["karmas"] / 100).floor() != 0)
-                  Container(
+                  SizedBox(
                     height: 120,
                     child: ListView.builder(
                       itemCount: (body["karmas"] / 100).floor(),
@@ -155,63 +166,58 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.secondary,
-                          ),
-                          onPressed: () {},
-                          child: const Text(
-                            "Edit Profile",
-                            style: TextStyle(color: Colors.white),
-                          )),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondary,
+                        ),
+                        onPressed: () {},
+                        child: const Text(
+                          "Edit Profile",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ),
                     const SizedBox(width: 20),
                     Expanded(
                       child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Connect",
-                            style: TextStyle(
-                              fontSize: 17,
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                          )),
+                        onPressed: () {},
+                        child: Text(
+                          "Connect",
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 18,
-                ),
+                const SizedBox(height: 18),
                 FutureBuilder(
                   future: getPosts(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.active) {
                       return const CircularProgressIndicator();
                     } else if (snapshot.hasError) {
-                      return Center(
-                        child: Text(snapshot.error.toString()),
-                      );
+                      return Center(child: Text(snapshot.error.toString()));
                     } else if (snapshot.data == null) {
-                      return const Center(
-                        child: Text("no data found"),
-                      );
+                      return const Center(child: Text("no data found"));
                     }
 
                     var data = jsonDecode(snapshot.data!.body) as List;
                     return GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2),
+                            crossAxisCount: 2,
+                          ),
                       shrinkWrap: true,
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        return ProfilePost(
-                          media: data[index]["media"],
-                        );
+                        return ProfilePost(media: data[index]["media"]);
                       },
                     );
                   },
-                )
+                ),
               ],
             );
           },

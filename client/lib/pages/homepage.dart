@@ -17,8 +17,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<http.Response> getPosts() async {
     String token = await SharedPref.getToken();
     Map<String, String> header = {"Authorization": "Bearer $token"};
-    return http.get(Uri.parse("http://65.2.182.126:5000/post/myposts"),
-        headers: header);
+    return http.get(
+      Uri.parse("http://65.2.182.126:5000/post/myposts"),
+      headers: header,
+    );
   }
 
   @override
@@ -30,16 +32,16 @@ class _MyHomePageState extends State<MyHomePage> {
         child: FloatingActionButton(
           backgroundColor: Theme.of(context).colorScheme.secondary,
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) {
-                return const NewPostWidget();
-              },
-            ));
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return const NewPostWidget();
+                },
+              ),
+            );
           },
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
+          child: const Icon(Icons.add, color: Colors.white),
         ),
       ),
       body: Padding(

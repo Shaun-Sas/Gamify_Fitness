@@ -24,12 +24,15 @@ class _NewPostWidgetState extends State<NewPostWidget> {
       String token = await SharedPref.getToken();
       var client = http.Client();
       var request = http.MultipartRequest(
-          'post', Uri.parse('http://65.2.182.126:5000/post/post'));
+        'post',
+        Uri.parse('http://65.2.182.126:5000/post/post'),
+      );
 
       request.headers.addAll({"Authorization": "Bearer $token"});
       request.fields["caption"] = captionController.text;
-      request.files
-          .add(await http.MultipartFile.fromPath("content-media", file!.path!));
+      request.files.add(
+        await http.MultipartFile.fromPath("content-media", file!.path!),
+      );
       var response = await client.send(request);
 
       client.close();
@@ -48,7 +51,8 @@ class _NewPostWidgetState extends State<NewPostWidget> {
         file = result.files[0];
       } else {
         print(
-            "+++++++++++++++++++++++++++++++++++++nullllllllllllllllllllllllllllllllll");
+          "+++++++++++++++++++++++++++++++++++++nullllllllllllllllllllllllllllllllll",
+        );
       }
     }
 
@@ -57,10 +61,11 @@ class _NewPostWidgetState extends State<NewPostWidget> {
         title: const Text("create post"),
         actions: [
           IconButton(
-              onPressed: () {
-                post();
-              },
-              icon: const Icon(Icons.check))
+            onPressed: () {
+              post();
+            },
+            icon: const Icon(Icons.check),
+          ),
         ],
       ),
       body: Padding(
@@ -73,24 +78,27 @@ class _NewPostWidgetState extends State<NewPostWidget> {
                 child: TextField(
                   controller: captionController,
                   decoration: const InputDecoration(
-                      label: Text("captions"), border: OutlineInputBorder()),
+                    label: Text("captions"),
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
-              const SizedBox(
-                height: 18,
-              ),
+              const SizedBox(height: 18),
               SizedBox(
                 width: MediaQuery.of(context).size.width - 45,
                 child: ElevatedButton(
-                    onPressed: () {
-                      getFile();
-                    },
-                    child: Text("select video",
-                        style: TextStyle(
-                          fontSize: 25,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ))),
-              )
+                  onPressed: () {
+                    getFile();
+                  },
+                  child: Text(
+                    "select video",
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

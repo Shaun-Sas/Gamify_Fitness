@@ -31,8 +31,8 @@ class _ProfilePostState extends State<ProfilePost> {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Container(
+        padding: const EdgeInsets.all(4),
         child: VideoPlayer(_videoPlayerController),
-        padding: EdgeInsets.all(4),
       ),
     );
   }

@@ -16,10 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Level Up',
-        theme: lightTheme,
-        darkTheme: darkTheme,
-        home: Authenticator());
+      debugShowCheckedModeBanner: false,
+      title: 'Level Up',
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      home: const Authenticator(),
+    );
   }
 }

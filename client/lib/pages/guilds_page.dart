@@ -26,9 +26,10 @@ class _GuildsPageState extends State<GuildsPage> {
     Map<String, String> header = {"Authorization": "Bearer $token"};
 
     var response = await http.post(
-        Uri.parse("http://65.2.182.126:5000/community/community"),
-        headers: header,
-        body: Map.from({"name": gName, "description": gDes}));
+      Uri.parse("http://65.2.182.126:5000/community/community"),
+      headers: header,
+      body: Map.from({"name": gName, "description": gDes}),
+    );
 
     if (response.statusCode == 200) {
       setState(() {
@@ -41,8 +42,9 @@ class _GuildsPageState extends State<GuildsPage> {
     String token = await SharedPref.getToken();
     Map<String, String> header = {"Authorization": "Bearer $token"};
     return http.get(
-        Uri.parse("http://65.2.182.126:5000/community/mycommunities"),
-        headers: header);
+      Uri.parse("http://65.2.182.126:5000/community/mycommunities"),
+      headers: header,
+    );
   }
 
   @override
@@ -67,18 +69,17 @@ class _GuildsPageState extends State<GuildsPage> {
                 itemCount: data.length,
                 itemBuilder: (context, index) {
                   return CommunityWidget(
-                      id: data[index]["_id"],
-                      name: data[index]["name"],
-                      desc: data[index]["description"],
-                      image: data[index]["name"],
-                      members: data[index]["members"],
-                      tasks: data[index]["tasks"]);
+                    id: data[index]["_id"],
+                    name: data[index]["name"],
+                    desc: data[index]["description"],
+                    image: data[index]["name"],
+                    members: data[index]["members"],
+                    tasks: data[index]["tasks"],
+                  );
                 },
               );
             } else {
-              return Center(
-                child: Text(snapshot.error.toString()),
-              );
+              return Center(child: Text(snapshot.error.toString()));
             }
           },
         ),
@@ -93,28 +94,25 @@ class _GuildsPageState extends State<GuildsPage> {
                 title: const Text("Create Guild"),
                 content: Wrap(
                   children: [
-                    TextField(
-                      controller: nameCont,
-                    ),
-                    TextField(
-                      controller: desCont,
-                    )
+                    TextField(controller: nameCont),
+                    TextField(controller: desCont),
                   ],
                 ),
                 actions: [
                   isLoading
                       ? const CircularProgressIndicator()
                       : TextButton(
-                          onPressed: () {
-                            addGuilds(nameCont.text, desCont.text);
-                            Navigator.pop(dialofContext);
-                          },
-                          child: Text("Create",
-                              style: TextStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .inversePrimary,
-                              )))
+                        onPressed: () {
+                          addGuilds(nameCont.text, desCont.text);
+                          Navigator.pop(dialofContext);
+                        },
+                        child: Text(
+                          "Create",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                          ),
+                        ),
+                      ),
                 ],
               );
             },

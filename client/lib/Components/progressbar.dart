@@ -4,7 +4,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 class Progressbar extends StatelessWidget {
   final int points;
 
-  Progressbar({required this.points});
+  const Progressbar({super.key, required this.points});
 
   @override
   Widget build(BuildContext context) {
@@ -14,18 +14,17 @@ class Progressbar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          'Level $currentLevel',
-        ),
+        Text('Level $currentLevel'),
         LinearPercentIndicator(
-            lineHeight: 6,
-            width: MediaQuery.of(context).size.width - 200,
-            percent: progressPercent,
-            backgroundColor: Colors.grey.shade400,
-            progressColor: Colors.green),
+          lineHeight: 6,
+          width: MediaQuery.of(context).size.width - 200,
+          percent: progressPercent,
+          backgroundColor: Colors.grey.shade400,
+          progressColor: Colors.green,
+        ),
         Text(
           'Progress: ${(progressPercent * 100).toStringAsFixed(1)}%',
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 18),
         ),
       ],
     );
