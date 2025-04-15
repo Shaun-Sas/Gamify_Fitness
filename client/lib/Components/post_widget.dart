@@ -1,7 +1,10 @@
+import 'package:client/services/shared_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:http/http.dart' as http;
 
 class PostWidget extends StatefulWidget {
+  final String id;
   final String authorId;
   final String timestamps;
   final String media;
@@ -10,6 +13,7 @@ class PostWidget extends StatefulWidget {
 
   const PostWidget({
     super.key,
+    required this.id,
     required this.authorId,
     required this.timestamps,
     required this.media,
@@ -51,6 +55,15 @@ class _PostWidgetState extends State<PostWidget> {
   void dispose() {
     _videoController?.dispose();
     super.dispose();
+  }
+
+  void likePost(postId) async {
+    String token = await SharedPref.getToken();
+    Map<String, String> header = {"Authorization": "Bearer $token"};
+    http.get(
+      Uri.parse("http://localhost:5000/post/like/$postId"),
+      headers: header,
+    );
   }
 
   @override
@@ -131,7 +144,9 @@ class _PostWidgetState extends State<PostWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  likePost(widget.id);
+                },
                 icon: Icon(Icons.favorite, size: 24, color: textColor),
                 label: Text(
                   "${widget.likes} likes",

@@ -17,7 +17,7 @@ class Progressbar extends StatelessWidget {
         Text('Level $currentLevel'),
         LinearPercentIndicator(
           lineHeight: 6,
-          width: MediaQuery.of(context).size.width - 200,
+          width: MediaQuery.of(context).size.width - 220,
           percent: progressPercent,
           backgroundColor: Colors.grey.shade400,
           progressColor: Colors.green,

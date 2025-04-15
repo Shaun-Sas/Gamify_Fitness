@@ -17,7 +17,7 @@ router.route("/all").get(postController.allPosts);
 
 router.route("/comment/:postId").post(authorize, postController.addComment);
 
-router.route("/like/:postId").post(authorize, postController.addLike);
+router.route("/like/:postId").get(authorize, postController.addLike);
 
 router.route("/user/:userId").get(postController.getUserPost);
 

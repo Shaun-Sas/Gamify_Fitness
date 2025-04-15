@@ -170,11 +170,10 @@ postController.addComment = async (req, res) => {
 
 postController.addLike = async (req, res) => {
   const postId = req.params.postId;
-  const { likes } = req.body;
 
   try {
     const post = await postModel.findById(postId);
-    const user = await userModel.findById(post.authorId);
+    const user = await userModel.findOne({username: post.user});
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
@@ -183,16 +182,12 @@ postController.addLike = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    const prevLikes = post.likes;
-    const prevKarma = user.karmas;
-    const newLikes = prevLikes + parseInt(likes);
-    const newKarma = prevKarma + parseInt(likes) * 2;
 
-    await postModel.updateOne({ _id: postId }, { $set: { likes: newLikes } });
+    await postModel.updateOne({ _id: postId }, { $inc: { likes : 1 } });
 
     await userModel.updateOne(
       { _id: post.authorId },
-      { $set: { karmas: newKarma } }
+      { $inc: { karmas: 2 } }
     );
 
     res.json({ message: "Like Updated" });
