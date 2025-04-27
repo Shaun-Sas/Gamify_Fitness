@@ -15,7 +15,7 @@ class _WrapperState extends State<Wrapper> {
   int currentPageIndex = 0;
   List<Widget> pages = [
     const MyHomePage(),
-    const QuotesPage(),
+    const HabitPage(),
     const GuildsPage(),
     const ProfilePage(),
   ];
@@ -51,7 +51,7 @@ class _WrapperState extends State<Wrapper> {
             ),
             NavigationDestination(
               icon: Icon(Icons.shield),
-              label: 'Quests',
+              label: 'Habits',
             ),
             NavigationDestination(
               icon: Icon(Icons.local_activity),

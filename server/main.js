@@ -4,12 +4,16 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const logger = require("morgan");
 const connectDB = require("./configs/connect.js");
+const fs = require("fs")
 const app = express();
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
+
+if(!fs.existsSync("uploads")) 
+  fs.mkdirSync("uploads")
 
 app.use("/uploads", express.static('uploads'))
 
