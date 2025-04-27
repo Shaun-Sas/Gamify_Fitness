@@ -61,7 +61,6 @@ class _MyHomePageState extends State<MyHomePage> {
               return ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (context, index) {
-                  print(data);
                   return PostWidget(
                     id: data[index]["_id"],
                     authorId: data[index]["user"],
